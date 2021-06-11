@@ -20,11 +20,65 @@ public class MyJoinsDB {
 
             ResultSet resultSet = statement.executeQuery(
                     "select employees.phone_number as phone, personalinfo.address from employees, personalinfo\n" +
-                        "where employees.idEmployee = personalinfo.idEmployee;");
+                            "where employees.idEmployee = personalinfo.idEmployee;");
             while (resultSet.next()) {
                 String phone = resultSet.getString(1);
                 String address = resultSet.getString(2);
                 System.out.println("Phone: " + phone + "; Address: " + address);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnections(connection, statement);
+        }
+    }
+
+    public void getNotMarriedEmployee() {
+        registrationDriver();
+
+        Connection connection = null;
+        Statement statement = null;
+
+        try {
+            connection = DriverManager.getConnection(URL, LOGIN, PASSWORD);
+            statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery(
+                    "select personalinfo.birthday, employees.phone_number \n" +
+                        "from employees join personalinfo on employees.idEmployee = personalinfo.idEmployee \n" +
+                        "where personalinfo.married = 0;");
+            while (resultSet.next()) {
+                Date birthday = resultSet.getDate(1);
+                String phone = resultSet.getString(2);
+                System.out.println("Date: " + birthday + "; Phone: " + phone);
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            closeConnections(connection, statement);
+        }
+    }
+
+    public void getManagers() {
+        registrationDriver();
+
+        Connection connection = null;
+        Statement statement = null;
+
+        try {
+            connection = DriverManager.getConnection(URL, LOGIN, PASSWORD);
+            statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery(
+                    "select personalinfo.birthday, employees.phone_number from employees \n" +
+                        "join personalinfo on employees.idEmployee = personalinfo.idEmployee\n" +
+                        "join positions on employees.idPosition = positions.idPosition\n" +
+                        "where positions.idPosition between 2 and 4;");
+            while (resultSet.next()) {
+                Date birthday = resultSet.getDate(1);
+                String phone = resultSet.getString(2);
+                System.out.println("Date: " + birthday + "; Phone: " + phone);
             }
         } catch (SQLException e) {
             e.printStackTrace();
