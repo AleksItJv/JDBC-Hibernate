@@ -9,7 +9,6 @@ public class MyJoinsDB {
     public static final String PASSWORD = "123456";
 
     public void getPhoneAddress() {
-        registrationDriver();
 
         Connection connection = null;
         Statement statement = null;
@@ -34,7 +33,6 @@ public class MyJoinsDB {
     }
 
     public void getNotMarriedEmployee() {
-        registrationDriver();
 
         Connection connection = null;
         Statement statement = null;
@@ -61,7 +59,6 @@ public class MyJoinsDB {
     }
 
     public void getManagers() {
-        registrationDriver();
 
         Connection connection = null;
         Statement statement = null;
@@ -104,12 +101,12 @@ public class MyJoinsDB {
         }
     }
 
-    private static void registrationDriver() {
+/*    private static void registrationDriver() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("Driver loading success");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }
